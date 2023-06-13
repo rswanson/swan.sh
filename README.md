@@ -1,2 +1,1 @@
-# swan.sh
-frontend of swan.sh
+# swan.sh frontend

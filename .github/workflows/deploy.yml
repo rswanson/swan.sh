@@ -25,7 +25,9 @@ jobs:
                 target: wasm32-unknown-unknown
             - uses: Swatinem/rust-cache@v2
             - name: Install trunk
-              run: cargo install trunk
+              run: | 
+                wget -qO- https://github.com/thedodd/trunk/releases/download/${VERSION}/trunk-x86_64-unknown-linux-gnu.tar.gz | tar -xzf-
+                mv trunk /usr/local/bin/
             - name: Run build
               run: trunk build --release
             - name: Archive dist directory

@@ -1,0 +1,48 @@
+name: swan.sh s3 deploy 
+
+on:
+  workflow_call:
+
+permissions:
+  id-token: write # This is required for requesting the JWT
+  contents: read  # This is required for actions/checkout
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v3
+            - name: Install dependencies
+              run: yarn install
+            - name: Build
+              run: cargo build --release
+            - name: Archive build directory
+              uses: actions/upload-artifact@v3
+              with:
+                name: dist
+                path: dist
+    deploy: 
+        # only runs when the branch is main
+        if: github.ref == 'refs/heads/main'
+        runs-on: ubuntu-latest
+        needs: build
+        steps:
+            - name: Download build artifact
+              uses: actions/download-artifact@v3
+              with:
+                name: dist
+                path: dist
+            - name: Configure AWS credentials 
+              uses: aws-actions/configure-aws-credentials@v2
+              with: 
+                role-to-assume: ${{ secrets.IAM_DEPLOYER_ROLE }}
+                role-session-name: github_federated_aws
+                aws-region: ${{ vars.AWS_REGION }}
+            - name: Deploy Site to S3
+              env: 
+                AWS_CLOUDFRONT_DISTRIBUTION_ID: ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID }}
+                AWS_S3_BUCKET : ${{ secrets.AWS_S3_BUCKET }}
+              run: |
+                aws s3 sync --delete --sse AES256 --acl public-read build/ $AWS_S3_BUCKET
+                aws cloudfront create-invalidation --distribution-id "$AWS_CLOUDFRONT_DISTRIBUTION_ID" --paths "/*"

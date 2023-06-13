@@ -1,7 +1,12 @@
 name: swan.sh s3 deploy 
 
 on:
-  workflow_call:
+    push: 
+        branches: 
+            - main
+    pull_request:
+    
+
 
 permissions:
   id-token: write # This is required for requesting the JWT

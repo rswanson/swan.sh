@@ -25,7 +25,9 @@ jobs:
                 target: wasm32-unknown-unknown
             - uses: Swatinem/rust-cache@v2
             - name: Install trunk
-              run: cargo install trunk
+              run: | 
+                wget -qO- https://github.com/thedodd/trunk/releases/download/${VERSION}/trunk-x86_64-unknown-linux-gnu.tar.gz | tar -xzf-
+                mv trunk /usr/local/bin/
             - name: Run build
               run: trunk build --release
             - name: Archive dist directory
@@ -99,5 +101,5 @@ jobs:
                 AWS_CLOUDFRONT_DISTRIBUTION_ID: ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID }}
                 AWS_S3_BUCKET : ${{ secrets.AWS_S3_BUCKET }}
               run: |
-                aws s3 sync --delete --sse AES256 --acl public-read build/ $AWS_S3_BUCKET
+                aws s3 sync --delete --sse AES256 --acl public-read dist/ $AWS_S3_BUCKET
                 aws cloudfront create-invalidation --distribution-id "$AWS_CLOUDFRONT_DISTRIBUTION_ID" --paths "/*"

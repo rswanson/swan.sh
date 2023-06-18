@@ -108,11 +108,6 @@ jobs:
                 role-to-assume: ${{ secrets.IAM_DEPLOYER_ROLE }}
                 role-session-name: github_federated_aws
                 aws-region: ${{ vars.AWS_REGION }}
-            - name: Deploy static content to s3
-              env: 
-                AWS_S3_BUCKET : ${{ secrets.AWS_S3_BUCKET }}
-              run: |
-                aws s3 sync --delete --sse AES256 --acl public-read static/ "$AWS_S3_BUCKET"/static
             - name: Deploy Site to S3
               env: 
                 AWS_CLOUDFRONT_DISTRIBUTION_ID: ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID }}
@@ -120,3 +115,8 @@ jobs:
               run: |
                 aws s3 sync --delete --sse AES256 --acl public-read dist/ $AWS_S3_BUCKET
                 aws cloudfront create-invalidation --distribution-id "$AWS_CLOUDFRONT_DISTRIBUTION_ID" --paths "/*"
+            - name: Deploy static content to s3
+              env: 
+                AWS_S3_BUCKET : ${{ secrets.AWS_S3_BUCKET }}
+              run: |
+                aws s3 sync --delete --sse AES256 --acl public-read static/ "$AWS_S3_BUCKET"/static

@@ -20,7 +20,7 @@ jobs:
             - name: Checkout repository
               uses: actions/checkout@v3
             - name: Install Rust toolchain
-              uses: dtolnay/rust-toolchain@stable
+              uses: dtolnay/rust-toolchain@nightly
               with:
                 target: wasm32-unknown-unknown
             - uses: Swatinem/rust-cache@v2
@@ -43,7 +43,7 @@ jobs:
             - name: Checkout repository
               uses: actions/checkout@v3
             - name: Install Rust toolchain
-              uses: dtolnay/rust-toolchain@stable
+              uses: dtolnay/rust-toolchain@nightly
               with:
                 target: wasm32-unknown-unknown
             - uses: Swatinem/rust-cache@v2
@@ -57,7 +57,7 @@ jobs:
             - name: Checkout repository
               uses: actions/checkout@v3
             - name: Install Rust toolchain
-              uses: dtolnay/rust-toolchain@stable
+              uses: dtolnay/rust-toolchain@nightly
               with:
                 target: wasm32-unknown-unknown
                 components: rustfmt
@@ -72,7 +72,7 @@ jobs:
             - name: Checkout repository
               uses: actions/checkout@v3
             - name: Install Rust toolchain
-              uses: dtolnay/rust-toolchain@stable
+              uses: dtolnay/rust-toolchain@nightly
               with:
                 target: wasm32-unknown-unknown
                 components: clippy
@@ -80,6 +80,7 @@ jobs:
             - name: Clippy check
               run: cargo clippy --all-targets --all-features --workspace -- -D warnings
     deploy: 
+        name: Deploy to S3
         # only runs when the branch is main
         if: github.ref == 'refs/heads/main'
         runs-on: ubuntu-latest

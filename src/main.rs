@@ -22,9 +22,9 @@ fn App() -> Html {
             line-height: 1.2;
 
         "#)}>
-        <img src="./swan.png" alt="swan.sh logo" class={css!(r#"
-            width: 100px;
-            height: 100px;
+        <img src="https://swan.sh/swan.png" alt="swan.sh logo" class={css!(r#"
+            width: 75;
+            height: 75px;
             margin: 0;
             padding: 0;
             "#)} />

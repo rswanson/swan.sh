@@ -1,45 +1,51 @@
-use stylist::css;
 use yew::prelude::*;
+use stylist::yew::Global;
+use stylist::css;
 
 #[function_component]
 fn App() -> Html {
     html! {
-        <div class={css!(r#"
-            align-items: center;
-            background-color: #23b9f7;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            position: absolute;
-            width: 300px;
-            height: 200px;
-            z-index: 15;
-            top: 50%;
-            left: 50%;
-            margin: -100px 0 0 -150px; 
-            font-family: 'Roboto Mono', monospace;
-            font-weight: 400;
-            line-height: 1.2;
-
-        "#)}>
-        <img src="https://swan.sh/static/swan.png" alt="swan.sh logo" class={css!(r#"
-            width: 100px;
-            height: 100px;
-            margin: 0;
-            padding: 0;
+        <>
+        <Global css={css!(r#"
+                font-family: 'Roboto Mono', monospace;
+                font-weight: 400;
+                line-height: 1.2;
+                background-color: #1cc4fc;
             "#)} />
-        <h1 class={css!(r#"
-            font-size: 3rem;
-            text-transform: uppercase;
-            margin: 0;
-            padding: 0;
-            "#)}>{ "swan.sh" }</h1>
-        <p class={css!(r#"
-            font-size: 1rem;
-            margin: 0;
-            padding: 0;
-            "#)}>{ "Placeholder Site for swan.sh" }</p>
-        </div>
+            <div class={css!(r#"
+                align-items: center;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                position: absolute;
+                width: 500px;
+                height: 400px;
+                z-index: 15;
+                top: 50%;
+                left: 50%;
+                margin-top: -200px;
+                margin-left: -250px;
+                border-radius: 20px;
+            "#)}>
+            <img src="https://swan.sh/static/swan.png" alt="swan.sh logo" class={css!(r#"
+                width: 150px;
+                height: 150px;
+                border-radius: 50%;
+                outline: 5px solid #fff;
+                "#)} />
+            <h1 class={css!(r#"
+                font-size: 3rem;
+                text-transform: lowercase;
+                margin: 0;
+                padding: 0;
+                "#)}>{ "swan.sh" }</h1>
+            <p class={css!(r#"
+                font-size: 1rem;
+                margin: 0;
+                padding: 0;
+                "#)}>{ "coming soon™" }</p>
+            </div>
+        </>
     }
 }
 

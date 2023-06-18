@@ -1,10 +1,8 @@
 use stylist::css;
-use stylist::yew::use_style;
 use yew::prelude::*;
 
 #[function_component]
 fn App() -> Html {
-    let style = use_style!("text-align: center;");
     html! {
         <div class={css!(r#"
             align-items: center;

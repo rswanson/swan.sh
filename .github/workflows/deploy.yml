@@ -35,6 +35,12 @@ jobs:
               with:
                 name: dist
                 path: dist
+            - name: Archive static directory
+              uses: actions/upload-artifact@v3
+              with:
+                name: static
+                path: static
+  
 
     test:
         name: Test Suite
@@ -86,17 +92,27 @@ jobs:
         runs-on: ubuntu-latest
         needs: [build, test, rustfmt, clippy]
         steps:
-            - name: Download build artifact
+            - name: Download dist artifact
               uses: actions/download-artifact@v3
               with:
                 name: dist
                 path: dist
+            - name: Download static artifact
+              uses: actions/download-artifact@v3
+              with:
+                name: static
+                path: static
             - name: Configure AWS credentials 
               uses: aws-actions/configure-aws-credentials@v2
               with: 
                 role-to-assume: ${{ secrets.IAM_DEPLOYER_ROLE }}
                 role-session-name: github_federated_aws
                 aws-region: ${{ vars.AWS_REGION }}
+            - name: Deploy static content to s3
+              env: 
+                AWS_S3_BUCKET : ${{ secrets.AWS_S3_BUCKET }}
+              run: |
+                aws s3 sync --delete --sse AES256 --acl public-read dist/ $AWS_S3_BUCKET
             - name: Deploy Site to S3
               env: 
                 AWS_CLOUDFRONT_DISTRIBUTION_ID: ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID }}

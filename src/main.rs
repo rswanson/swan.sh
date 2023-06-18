@@ -6,8 +6,7 @@ fn App() -> Html {
     html! {
         <div class={css!(r#"
             align-items: center;
-            background-color: #282c34;
-            color: #fff;
+            background-color: #5ec5f5;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -23,6 +22,12 @@ fn App() -> Html {
             line-height: 1.2;
 
         "#)}>
+        <img src="https://swan.sh/swan.png" alt="swan.sh logo" class={css!(r#"
+            width: 75;
+            height: 75px;
+            margin: 0;
+            padding: 0;
+            "#)} />
         <h1 class={css!(r#"
             font-size: 3rem;
             text-transform: uppercase;

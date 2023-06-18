@@ -119,4 +119,4 @@ jobs:
               env: 
                 AWS_S3_BUCKET : ${{ secrets.AWS_S3_BUCKET }}
               run: |
-                aws s3 sync --delete --sse AES256 --acl public-read static/ "$AWS_S3_BUCKET"/static
+                aws s3 sync --delete --sse AES256 --acl public-read static/ "$AWS_S3_BUCKET"static

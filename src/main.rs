@@ -1,6 +1,6 @@
-use yew::prelude::*;
-use stylist::yew::use_style;
 use stylist::css;
+use stylist::yew::use_style;
+use yew::prelude::*;
 
 #[function_component]
 fn App() -> Html {
